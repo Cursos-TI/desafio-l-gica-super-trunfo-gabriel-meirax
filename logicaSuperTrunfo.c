@@ -9,7 +9,7 @@ int main() {
     // Definição das variáveis para armazenar as propriedades das cidades
     // Você pode utilizar o código do primeiro desafio
 
-     char estado1, estado2, codigo1[5], codigo2[5], cidade1[50], cidade2[50], buffer[4]; // Inicialização das variáveis do tipo char, string e buffer. O buffer é utilizado apenas como armazenamento temporário.
+     char estado1, estado2, codigo1[5], codigo2[5], cidade1[50], cidade2[50], buffer[4], vencedor[50]; // Inicialização das variáveis do tipo char, string e buffer. O buffer é utilizado apenas como armazenamento temporário.
 
     int turistico1, turistico2; // Inicialização das variáveis do tipo int.
     unsigned long int populacao1, populacao2, pontuacao1, pontuacao2; // Inicialização das variáveis do tipo unsigned long int.
@@ -81,6 +81,8 @@ int main() {
 
     pibPerCapita2 = pib2 * 1000000000 / (float) populacao2;
 
+    printf("\n\n");
+
     // Comparação de Cartas:
     // Desenvolva a lógica de comparação entre duas cartas.
     // Utilize estruturas de decisão como if, if-else para comparar atributos como população, área, PIB, etc.
@@ -93,60 +95,60 @@ int main() {
     // }
 
     if (populacao1 > populacao2) {
-        printf("Carta %c tem mais população\n", cidade1);
+        printf("Carta %s tem mais população\n", cidade1);
         pontuacao1++;
     } else if (populacao2 > populacao1) {
-        printf("Carta %c tem mais população\n", cidade2);
+        printf("Carta %s tem mais população\n", cidade2);
         pontuacao2++;
     } else {
         printf("Houve um empate na população\n");
     }
 
     if (area1 > area2) {
-        printf("Carta %c tem mais área\n", cidade1);
+        printf("Carta %s tem mais área\n", cidade1);
         pontuacao1++;
     } else if (area2 > area1) {
-        printf("Carta %c tem mais área\n", cidade2);
+        printf("Carta %s tem mais área\n", cidade2);
         pontuacao2++;
     } else {
         printf("Houve um empate na área\n");
     }
 
     if (pib1 > pib2) {
-        printf("Carta %c tem o PIB maior", cidade1);
+        printf("Carta %s tem o PIB maior", cidade1);
         pontuacao1++;
     } else if (pib2 > pib1){
-        printf("Carta %c tem o PIB maior", cidade2);
+        printf("Carta %s tem o PIB maior", cidade2);
         pontuacao2++;
     } else {
         printf("Houve um empate no PIB\n");
     }
 
     if (turistico1 > turistico2){
-        printf("Carta %c tem mais pontos turísticos\n", cidade1);
+        printf("Carta %s tem mais pontos turísticos\n", cidade1);
         pontuacao1++;
     } else if (turistico2 > turistico1){
-        printf("Carta %c tem mais pontos turísticos\n", cidade2);
+        printf("Carta %s tem mais pontos turísticos\n", cidade2);
         pontuacao2++;
     } else {
         printf("Houve um empate nos pontos turísticos\n");
     }
     
     if ((1.f / densidade1) > (1.f / densidade2)) {
-        printf("Carta %c tem melhor densidade demográfica\n", cidade1);
+        printf("Carta %s tem melhor densidade demográfica\n", cidade1);
         pontuacao1++;
     } else if ((1.f / densidade2) > (1.f / densidade1)) {
-        printf("Carta %c tem melhor densidade demográfica\n", cidade2);
+        printf("Carta %s tem melhor densidade demográfica\n", cidade2);
         pontuacao2++;
     } else {
         printf("Houve um empate na densidade demográfica\n");
     }
 
     if (pibPerCapita1 > pibPerCapita2) {
-        printf("Carta %c tem maior PIB Per Capita\n", cidade1);
+        printf("Carta %s tem maior PIB Per Capita\n", cidade1);
         pontuacao1++;
     } else if (pibPerCapita2 > pibPerCapita1){
-        printf("Carta %c tem maior PIB Per Capita\n", cidade2);
+        printf("Carta %s tem maior PIB Per Capita\n", cidade2);
         pontuacao2++;
     } else  {
         printf("Houve um empate no PIB Per Capita\n");
@@ -160,6 +162,14 @@ int main() {
 
     // Exemplo:
     // printf("A cidade vencedora é: %s\n", cidadeVencedora);
+
+    if (pontuacao1 > pontuacao2) {
+        printf("A cidade vencedora é: %s. Com %lu pontos\n", cidade1, pontuacao1);
+    } else if (pontuacao2 > pontuacao1) {
+        printf("A cidade vencedora é: %s. Com %lu pontos\n", cidade2, pontuacao2);
+    } else {
+        printf("As cidades empataram, com pontuação de %lu\n", pontuacao1);
+    }
 
     return 0;
 }
