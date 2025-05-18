@@ -12,7 +12,7 @@ int main()
 
     char estado1, estado2, codigo1[5], codigo2[5], cidade1[50], cidade2[50], buffer[4], vencedor[50]; // Inicialização das variáveis do tipo char, string e buffer. O buffer é utilizado apenas como armazenamento temporário.
 
-    int turistico1, turistico2;                                       // Inicialização das variáveis do tipo int.
+    int turistico1, turistico2, validaPropriedade, stopLoop = 0;      // Inicialização das variáveis do tipo int.
     unsigned long int populacao1, populacao2, pontuacao1, pontuacao2; // Inicialização das variáveis do tipo unsigned long int.
 
     float area1, area2, pib1, pib2, densidade1, densidade2, pibPerCapita1, pibPerCapita2, superPoder1, superPoder2; // Inicialização das variáveis do tipo float.
@@ -82,6 +82,9 @@ int main()
 
     pibPerCapita2 = pib2 * 1000000000 / (float)populacao2;
 
+    superPoder1 = (float)populacao1 + area1 + pib1 + pibPerCapita1 + (float)turistico1 + (1.0f / densidade1); // Cálculo do super poder da primeira carta. O super poder é a soma de todos os atributos da cidade, incluindo a densidade populacional.
+    superPoder2 = (float)populacao2 + area2 + pib2 + pibPerCapita2 + (float)turistico2 + (1.0f / densidade2); // Cálculo do super poder da segunda carta.
+
     printf("\n\n");
 
     // Comparação de Cartas:
@@ -94,122 +97,160 @@ int main()
     // } else {
     //     printf("Cidade 2 tem maior população.\n");
     // }
-    printf("Escolha qual será o atributo comparado:\n");
-    printf("1 - População\n");
-    printf("2 - Área\n");
-    printf("3 - PIB\n");
-    printf("4 - Número de pontos turísticos\n");
-    printf("5 - Densidade demográfica\n");
 
     int opcao;
-    scanf("%d", &opcao);
-
-    switch (opcao)
+    do
     {
-    case 1:
-        if (populacao1 > populacao2)
+        printf("Escolha qual será o atributo comparado:\n");
+        printf("1 - População\n");
+        printf("2 - Área\n");
+        printf("3 - PIB\n");
+        printf("4 - Número de pontos turísticos\n");
+        printf("5 - Densidade demográfica\n");
+        printf("6 - PIB Per Capita\n");
+        printf("7 - Super Poder\n");
+        scanf("%d", &opcao);
+        if (validaPropriedade != opcao)
         {
-            printf("Carta %s tem mais população\n", cidade1);
-            pontuacao1++;
-        }
-        else if (populacao2 > populacao1)
-        {
-            printf("Carta %s tem mais população\n", cidade2);
-            pontuacao2++;
+            switch (opcao)
+            {
+            case 1:
+                if (populacao1 > populacao2)
+                {
+                    printf("Carta %s tem mais população: %lu\n", cidade1, populacao1);
+                    pontuacao1++;
+                }
+                else if (populacao2 > populacao1)
+                {
+                    printf("Carta %s tem mais população: %lu\n", cidade2, populacao2);
+                    pontuacao2++;
+                }
+                else
+                {
+                    printf("Houve um empate na população\n");
+                }
+                validaPropriedade = 1;
+                break;
+
+            case 2:
+                if (area1 > area2)
+                {
+                    printf("Carta %s tem mais área: %.2f\n", cidade1, area1);
+                    pontuacao1++;
+                }
+                else if (area2 > area1)
+                {
+                    printf("Carta %s tem mais área: %.2f\n", cidade2, area2);
+                    pontuacao2++;
+                }
+                else
+                {
+                    printf("Houve um empate na área\n");
+                }
+                validaPropriedade = 2;
+                break;
+
+            case 3:
+                if (pib1 > pib2)
+                {
+                    printf("Carta %s tem o PIB maior: %.2f\n", cidade1, pib1);
+                    pontuacao1++;
+                }
+                else if (pib2 > pib1)
+                {
+                    printf("Carta %s tem o PIB maior: %.2f\n", cidade2, pib2);
+                    pontuacao2++;
+                }
+                else
+                {
+                    printf("Houve um empate no PIB\n");
+                }
+                validaPropriedade = 3;
+                break;
+
+            case 4:
+                if (turistico1 > turistico2)
+                {
+                    printf("Carta %s tem mais pontos turísticos: %d\n", cidade1, turistico1);
+                    pontuacao1++;
+                }
+                else if (turistico2 > turistico1)
+                {
+                    printf("Carta %s tem mais pontos turísticos: %d\n", cidade2, turistico2);
+                    pontuacao2++;
+                }
+                else
+                {
+                    printf("Houve um empate nos pontos turísticos\n");
+                }
+                validaPropriedade = 4;
+                break;
+
+            case 5:
+                if ((1.f / densidade1) > (1.f / densidade2))
+                {
+                    printf("Carta %s tem melhor densidade demográfica: %.2f\n", cidade1, (1.f / densidade1));
+                    pontuacao1++;
+                }
+                else if ((1.f / densidade2) > (1.f / densidade1))
+                {
+                    printf("Carta %s tem melhor densidade demográfica: %.2f\n", cidade2, (1.f / densidade2));
+                    pontuacao2++;
+                }
+                else
+                {
+                    printf("Houve um empate na densidade demográfica\n");
+                }
+                validaPropriedade = 5;
+                break;
+
+            case 6:
+                if (pibPerCapita1 > pibPerCapita2)
+                {
+                    printf("Carta %s tem PIB per capita maior: %.2f\n", cidade1, pibPerCapita1);
+                    pontuacao1++;
+                }
+                else if (pibPerCapita2 > pibPerCapita1)
+                {
+                    printf("Carta %s tem PIB per capita maior: %.2f\n", cidade2, pibPerCapita2);
+                    pontuacao2++;
+                }
+                else
+                {
+                    printf("Houve um empate no PIB per capita\n");
+                }
+                validaPropriedade = 6;
+                break;
+
+            case 7:
+                if (superPoder1 > superPoder2)
+                {
+                    printf("Carta %s tem mais Super Poder: %.2f\n", cidade1, superPoder1);
+                    pontuacao1++;
+                }
+                else if (superPoder2 > superPoder1)
+                {
+                    printf("Carta %s tem mais Super Poder: %.2f\n", cidade2, superPoder2);
+                    pontuacao2++;
+                }
+                else
+                {
+                    printf("Houve um empate no PIB per capita\n");
+                }
+                validaPropriedade = 7;
+                break;
+
+            default:
+                printf("Não é uma opção válida!");
+                break;
+            }
+            stopLoop++;
         }
         else
         {
-            printf("Houve um empate na população\n");
-        }
-        break;
-
-    case 2:
-        if (area1 > area2)
-        {
-            printf("Carta %s tem mais área\n", cidade1);
-            pontuacao1++;
-        }
-        else if (area2 > area1)
-        {
-            printf("Carta %s tem mais área\n", cidade2);
-            pontuacao2++;
-        }
-        else
-        {
-            printf("Houve um empate na área\n");
-        }
-        break;
-
-    case 3:
-        if (pib1 > pib2)
-        {
-            printf("Carta %s tem o PIB maior", cidade1);
-            pontuacao1++;
-        }
-        else if (pib2 > pib1)
-        {
-            printf("Carta %s tem o PIB maior", cidade2);
-            pontuacao2++;
-        }
-        else
-        {
-            printf("Houve um empate no PIB\n");
-        }
-        break;
-
-    case 4:
-        if (turistico1 > turistico2)
-        {
-            printf("Carta %s tem mais pontos turísticos\n", cidade1);
-            pontuacao1++;
-        }
-        else if (turistico2 > turistico1)
-        {
-            printf("Carta %s tem mais pontos turísticos\n", cidade2);
-            pontuacao2++;
-        }
-        else
-        {
-            printf("Houve um empate nos pontos turísticos\n");
-        }
-
-    case 5:
-        if ((1.f / densidade1) > (1.f / densidade2))
-        {
-            printf("Carta %s tem melhor densidade demográfica\n", cidade1);
-            pontuacao1++;
-        }
-        else if ((1.f / densidade2) > (1.f / densidade1))
-        {
-            printf("Carta %s tem melhor densidade demográfica\n", cidade2);
-            pontuacao2++;
-        }
-        else
-        {
-            printf("Houve um empate na densidade demográfica\n");
-        }
-
-    default:
-        printf("Não é uma opção válida!");
-        break;
-    }
-
-    /*
-    if (pibPerCapita1 > pibPerCapita2)
-    {
-        printf("Carta %s tem maior PIB Per Capita\n", cidade1);
-        pontuacao1++;
-    }
-    else if (pibPerCapita2 > pibPerCapita1)
-    {
-        printf("Carta %s tem maior PIB Per Capita\n", cidade2);
-        pontuacao2++;
-    }
-    else
-    {
-        printf("Houve um empate no PIB Per Capita\n");
-    }
-    */
+            printf("Escolha uma propriedade nova diferente da anterior!\n");
+        };
+    } while (stopLoop != 2);
 
     // Exibição dos Resultados:
     // Após realizar as comparações, exiba os resultados para o usuário.
